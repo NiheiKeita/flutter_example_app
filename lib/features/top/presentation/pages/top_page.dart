@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 class TopPage extends StatelessWidget {
   const TopPage({super.key});
+  static const text = 'test';
 
   @override
   Widget build(BuildContext context) {
