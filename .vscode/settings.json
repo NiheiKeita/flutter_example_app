@@ -1,3 +1,10 @@
 {
-  "cmake.sourceDirectory": "/Users/niheikeita/develop/flutter_example_app/linux"
+  "cmake.sourceDirectory": "/Users/niheikeita/develop/flutter_example_app/linux",
+  "[dart]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "editor.formatOnSave": true
+  }
 }
