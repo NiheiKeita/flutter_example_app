@@ -18,6 +18,10 @@ class TopScreen extends StatelessWidget {
               onPressed: () => context.go('/second'),
               child: const Text('Secondへ遷移'),
             ),
+            TextButton(
+              onPressed: () => context.go('/counter'),
+              child: const Text('Counterへ遷移'),
+            ),
           ],
         ),
       ),

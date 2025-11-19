@@ -1,3 +1,4 @@
+import 'package:flutter_example_app/screens/counter/counter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../screens/second/second.dart';
@@ -15,6 +16,11 @@ final appRouter = GoRouter(
       path: '/second',
       name: 'second',
       builder: (context, state) => const SecondScreen(),
+    ),
+    GoRoute(
+      path: '/counter',
+      name: 'counter',
+      builder: (context, state) => const CounterScreen(),
     ),
   ],
 );
