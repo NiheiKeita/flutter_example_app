@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'controller.dart';
+
 class CounterScreen extends StatefulWidget {
   const CounterScreen({super.key});
 
@@ -8,10 +10,11 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
-  int count = 0;
-
-  void incrementCounter() {
-    setState(() => count++);
+  final controller = CounterController();
+  int get count => controller.count;
+  void increment() {
+    controller.increment();
+    setState(() {});
   }
 
   @override
@@ -24,10 +27,7 @@ class _CounterScreenState extends State<CounterScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text('$count'),
-            TextButton(
-              onPressed: incrementCounter,
-              child: const Text('カウントアップ'),
-            ),
+            TextButton(onPressed: increment, child: const Text('カウントアップ')),
           ],
         ),
       ),
