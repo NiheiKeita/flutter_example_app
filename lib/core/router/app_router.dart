@@ -1,6 +1,8 @@
+import 'package:flutter_example_app/screens/counter/counter.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/top/presentation/pages/top_page.dart';
-import '../../features/second/presentation/pages/second_page.dart';
+
+import '../../screens/second/second.dart';
+import '../../screens/top/top.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -8,12 +10,17 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/',
       name: 'top',
-      builder: (context, state) => const TopPage(),
+      builder: (context, state) => const TopScreen(),
     ),
     GoRoute(
       path: '/second',
       name: 'second',
-      builder: (context, state) => const SecondPage(),
+      builder: (context, state) => const SecondScreen(),
+    ),
+    GoRoute(
+      path: '/counter',
+      name: 'counter',
+      builder: (context, state) => const CounterScreen(),
     ),
   ],
 );
