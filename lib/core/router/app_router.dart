@@ -1,4 +1,4 @@
-import 'package:flutter_example_app/screens/counter/counter.dart';
+import 'package:flutter_example_app/screens/counter/container.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../screens/second/second.dart';
@@ -20,7 +20,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/counter',
       name: 'counter',
-      builder: (context, state) => const CounterScreen(),
+      builder: (context, state) => const CounterContainer(),
     ),
   ],
 );

@@ -1,13 +1,15 @@
+import 'package:flutter_example_app/screens/counter/presentation.dart';
 import 'package:widgetbook/widgetbook.dart';
-
-import 'counter.dart';
 
 final counterStories = WidgetbookComponent(
   name: 'CounterScreen',
   useCases: [
     WidgetbookUseCase(
       name: 'Default',
-      builder: (context) => const CounterScreen(),
+      builder: (context) => CounterPresentation(
+        count: 0,
+        onIncrement: () {}, // Provide an empty function as a placeholder
+      ),
     ),
   ],
 );
