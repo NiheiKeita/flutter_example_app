@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_example_app/screens/counter/controller.dart';
 import 'package:flutter_example_app/screens/counter/presentation.dart';
 
 class CounterContainer extends StatefulWidget {
@@ -9,16 +10,31 @@ class CounterContainer extends StatefulWidget {
 }
 
 class _CounterContainerState extends State<CounterContainer> {
-  int count = 0;
+  late final CounterController controller;
 
-  void increment() {
-    setState(() {
-      count++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    controller = CounterController(initialCount: 0);
+    controller.addListener(_handleControllerChanged);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_handleControllerChanged);
+    controller.dispose();
+    super.dispose();
+  }
+
+  void _handleControllerChanged() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return CounterPresentation(count: count, onIncrement: increment);
+    return CounterPresentation(
+      count: controller.count,
+      onIncrement: controller.increment,
+    );
   }
 }
