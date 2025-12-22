@@ -4,6 +4,7 @@ on: [pull_request]
 
 permissions:
   contents: read
+  issues: write
   pull-requests: write
 
 jobs:
@@ -33,12 +34,45 @@ jobs:
       - name: Install lcov
         run: sudo apt-get install -y lcov
 
-      - name: Show coverage summary
-        run: lcov --summary coverage/lcov.info
+      - name: Generate lcov summary
+        id: lcov_summary
+        run: |
+          summary="$(lcov --summary coverage/lcov.info)"
+          {
+            echo "summary<<'EOF'"
+            echo "$summary"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
-      - name: Report coverage to PR
-        uses: zgosalvez/github-actions-report-lcov@v3
+      - name: Calculate coverage
+        id: coverage
+        run: |
+          awk -F: '/^LF:/ {lf+=$2} /^LH:/ {lh+=$2} END { if (lf>0) printf("coverage=%.1f\n", (100*lh/lf)); else print "coverage=0.0" }' coverage/lcov.info >> "$GITHUB_OUTPUT"
+
+      - name: Comment coverage on PR
+        uses: actions/github-script@v7
         with:
-          coverage-files: coverage/lcov.info
-          artifact-name: coverage_report
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const coverage = '${{ steps.coverage.outputs.coverage }}';
+            const summary = `${{ steps.lcov_summary.outputs.summary }}`.trim();
+            const body = `Coverage: **${coverage}%**\n\n\`\`\`\n${summary}\n\`\`\``;
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(
+              (comment) => comment.user.type === 'Bot' && comment.body.startsWith('Coverage:')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
