@@ -40,5 +40,5 @@ jobs:
         uses: zgosalvez/github-actions-report-lcov@v3
         with:
           coverage-files: coverage/lcov.info
-          artifact-name: coverage-report
+          artifact-name: coverage_report
           github-token: ${{ secrets.GITHUB_TOKEN }}
